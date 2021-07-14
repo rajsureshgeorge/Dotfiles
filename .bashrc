@@ -119,3 +119,10 @@ fi
 eval "$(starship init bash)"
 
 figlet -f 3d -c  "Hi  Raj" |lolcat
+fcd(){
+    cd "$(find -type d |fzf)"
+}
+open(){
+    xdg-open "$(find -type f|fzf)"
+}
+alias getpath="find -type f |fzf | sed 's/^..//g'|tr -d '\n'|xclip -selection c"
