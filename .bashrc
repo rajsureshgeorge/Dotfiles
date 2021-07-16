@@ -127,5 +127,8 @@ fcd(){
 open(){
     xdg-open "$(find -type f|fzf)"
 }
+function cl() {
+    cd "$@" && ls -a
+    }
 alias hist="history |cut -c 8- |sort |uniq |fzf |tr -d '\n'|xclip -selection c"
 alias getpath="find -type f |fzf | sed 's/^..//g'|tr -d '\n'|xclip -selection c"
