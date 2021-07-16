@@ -1,2 +1,2 @@
 # Dotfiles
-This Repo Contains my DOT files
+This Repo Contains some of my DOT files and also some useful scripts.
