@@ -1,7 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 #see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-
+export VISUAL=vim;
+export EDITOR=vim;
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -55,7 +56,6 @@ if [ -n "$force_color_prompt" ]; then
 	color_prompt=
     fi
 fi
-
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
@@ -120,6 +120,14 @@ eval "$(starship init bash)"
 
 figlet -f 3d -c  "Hi  Raj" |lolcat
 
+function waldl(){
+  ./wallpaper.sh 
+}
+
+function vimv(){
+    ./bin/vimv
+}
+
 fcd(){
     cd "$(find -type d |fzf)"
 }
@@ -130,5 +138,7 @@ open(){
 function cl() {
     cd "$@" && ls -a
     }
+alias whatismyip="ifconfig |grep broadcast |awk '{print $2}'"
 alias hist="history |cut -c 8- |sort |uniq |fzf |tr -d '\n'|xclip -selection c"
+alias update="sudo apt update && sudo apt upgrade"
 alias getpath="find -type f |fzf | sed 's/^..//g'|tr -d '\n'|xclip -selection c"
