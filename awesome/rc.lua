@@ -16,6 +16,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
+beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 require("awful.hotkeys_popup.keys")
 
 -- {{{ Error handling
@@ -49,7 +50,7 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "vim"
+editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -61,7 +62,6 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.tile,
     awful.layout.suit.floating,
     awful.layout.suit.tile.left,
@@ -70,6 +70,7 @@ awful.layout.layouts = {
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
@@ -310,7 +311,18 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
+              --- Dmenu 
+              awful.key({ modkey },            "d",     function () 
+        awful.util.spawn("dmenu_run") end,
+              {description = "Dmenu", group = "launcher"}),
+ 
+              --Firefox
+              awful.key({ modkey },            "b",     function () 
+        awful.util.spawn("firefox") end,
+              {description = "Firefox", group = "launcher"}),
+
+
+   -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
@@ -324,11 +336,7 @@ globalkeys = gears.table.join(
                   }
               end,
               {description = "lua execute prompt", group = "awesome"}),
-
-              awful.key({modkey }, "d", function()
-        awful.util.spawn_with_shell( "exe=`dmenu_path | dmenu -b -nf '#888888' -nb '#222222' -sf '#ffffff' -sb '#285577'` && exec $exe")
-        end),
-              -- Menubar
+    -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
@@ -566,3 +574,7 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+--Startup Applications
+
+awful.spawn.with_shell("nitrogen --restore")
